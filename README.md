@@ -10,3 +10,7 @@ In the project, you recieve an email alert when a specific action occurs. Also d
 - FAN
 - AIR CONDITIONAL
 - REFRIGERATOR
+
+<br>
+### DEVICES USED
+- ESP32 Development Board    [!My esp32]()
