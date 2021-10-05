@@ -13,4 +13,5 @@ In the project, you recieve an email alert when a specific action occurs. Also d
 
 <br>
 ### DEVICES USED
-- ESP32 Development Board    [!My esp32]()
+- ESP32 Development Board   
+-  [!My esp32](https://github.com/Ogbonna-Joseph/Sending-Email-with-IFTTT-using-ESP32/blob/main/images/esp32.jpg)
