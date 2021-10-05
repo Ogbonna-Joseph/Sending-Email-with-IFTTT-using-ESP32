@@ -1,2 +1,3 @@
 # Sending-Email-with-IFTTT-using-ESP32
-THIS Project involves sending an email
+##THIS IS A HOME AUTOMATION PROJECT
+#### It involve controlling the appliances via the web browser
