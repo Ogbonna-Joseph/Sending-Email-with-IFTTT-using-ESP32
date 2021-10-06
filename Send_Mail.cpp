@@ -11,7 +11,7 @@ const char* password = "00000000";
 const char* host = "maker.ifttt.com";
 const char* apiKey = "pEbV6M8QVTmc9S43r2jfrWmy488E8hi61OqZr4lun4B";
 String serverName = "https://maker.ifttt.com/trigger/door_status/with/key/pEbV6M8QVTmc9S43r2jfrWmy488E8hi61OqZr4lun4B";
-static const char* connectionString = "";
+static const char* connectionString = "HostName=IOT-HUB-ESP.azure-devices.net;DeviceId=ESP-02;SharedAccessKey=3K/Nc5tebS7PLGbIjh6Eh7/WqAj0ZyNCZz2vzDzYjOc=";
 
 static bool hasIoTHub = false;
 
@@ -92,7 +92,7 @@ void azureiot(){
     char buff[128];
 
     // replace the following line with your data sent to Azure IoTHub
-    snprintf(buff, 128, "{\"topic\":\"iot\"}");
+    snprintf(buff, 128, "{\"JOSEPH\":\"PASU\"}");
     
     if (Esp32MQTTClient_SendEvent(buff))
     {
@@ -135,6 +135,7 @@ void redon(){
     digitalWrite(red, HIGH);
     Serial.println("the red led is being turn on");
     sendemail();
+    azureiot();
     server.send(200, "text/html", homepage);
     }
     
@@ -142,6 +143,7 @@ void greenon(){
     digitalWrite(green, HIGH);
     Serial.println("the green led is being turn on");
     sendemail();
+    azureiot();
     server.send(200, "text/html", homepage);
     }
 
@@ -149,6 +151,7 @@ void blueon(){
     digitalWrite(blue, HIGH);
     Serial.println("the blue led is being turn on");
     sendemail();
+    azureiot();
     server.send(200, "text/html", homepage);
     }
 
@@ -156,6 +159,7 @@ void redoff(){
     digitalWrite(red, LOW);
     Serial.println("the red led is being turned off");
     sendemail();
+    azureiot();
     server.send(200, "text/html", homepage);
     }
     
@@ -163,6 +167,7 @@ void greenoff(){
     digitalWrite(green, LOW);
     Serial.println("the green led is being turned off");
     sendemail();
+    azureiot();
     server.send(200, "text/html", homepage);
     }
 
@@ -170,6 +175,7 @@ void blueoff(){
     digitalWrite(blue, LOW);
     Serial.println("the blue led is being turned off");
     sendemail();
+    azureiot();
     server.send(200, "text/html", homepage);
     }
 
