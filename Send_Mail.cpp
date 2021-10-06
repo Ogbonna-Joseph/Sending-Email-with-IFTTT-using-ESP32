@@ -3,12 +3,17 @@
 #include <WebServer.h>
 #include <ESPmDNS.h>
 #include <HTTPClient.h>
+#include "AzureIotHub.h"
+#include "Esp32MQTTClient.h"
 
 const char* ssid = "JOSEPH";
 const char* password = "00000000";
 const char* host = "maker.ifttt.com";
 const char* apiKey = "pEbV6M8QVTmc9S43r2jfrWmy488E8hi61OqZr4lun4B";
 String serverName = "https://maker.ifttt.com/trigger/door_status/with/key/pEbV6M8QVTmc9S43r2jfrWmy488E8hi61OqZr4lun4B";
+static const char* connectionString = "";
+
+static bool hasIoTHub = false;
 
 String ledon = "on";
 String ledoff = "off";
@@ -72,6 +77,36 @@ const int buzzermode =  14;
 const int blue = 27;
 
 
+void azureiot(){
+   if (!Esp32MQTTClient_Init((const uint8_t*)connectionString))
+  {
+    hasIoTHub = false;
+    Serial.println("Initializing IoT hub failed.");
+    return;
+  }
+  hasIoTHub = true;
+
+  Serial.println("start sending events.");
+  if (hasIoTHub)
+  {
+    char buff[128];
+
+    // replace the following line with your data sent to Azure IoTHub
+    snprintf(buff, 128, "{\"topic\":\"iot\"}");
+    
+    if (Esp32MQTTClient_SendEvent(buff))
+    {
+      Serial.println("Sending data succeed");
+    }
+    else
+    {
+      Serial.println("Failure...");
+    }
+    delay(5000);
+  }
+  
+  }
+
 void sendemail(){
   
       HTTPClient http;
@@ -113,24 +148,28 @@ void greenon(){
 void blueon(){
     digitalWrite(blue, HIGH);
     Serial.println("the blue led is being turn on");
+    sendemail();
     server.send(200, "text/html", homepage);
     }
 
 void redoff(){
     digitalWrite(red, LOW);
     Serial.println("the red led is being turned off");
+    sendemail();
     server.send(200, "text/html", homepage);
     }
     
 void greenoff(){
     digitalWrite(green, LOW);
     Serial.println("the green led is being turned off");
+    sendemail();
     server.send(200, "text/html", homepage);
     }
 
 void blueoff(){
     digitalWrite(blue, LOW);
     Serial.println("the blue led is being turned off");
+    sendemail();
     server.send(200, "text/html", homepage);
     }
 
