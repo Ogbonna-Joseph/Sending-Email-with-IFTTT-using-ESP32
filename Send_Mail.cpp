@@ -9,9 +9,9 @@
 const char* ssid = "JOSEPH";
 const char* password = "00000000";
 const char* host = "maker.ifttt.com";
-const char* apiKey = "pEbV6M8QVTmc9S43r2jfrWmy488E8hi61OqZr4lun4B";
-String serverName = "https://maker.ifttt.com/trigger/door_status/with/key/pEbV6M8QVTmc9S43r2jfrWmy488E8hi61OqZr4lun4B";
-static const char* connectionString = "HostName=IOT-HUB-ESP.azure-devices.net;DeviceId=ESP-02;SharedAccessKey=3K/Nc5tebS7PLGbIjh6Eh7/WqAj0ZyNCZz2vzDzYjOc=";
+const char* apiKey = "";
+String serverName ="";
+static const char* connectionString = "";
 
 static bool hasIoTHub = false;
 
