@@ -9,9 +9,9 @@
 const char* ssid = "JOSEPH";
 const char* password = "00000000";
 const char* host = "maker.ifttt.com";
-const char* apiKey = "";
-String serverName ="";
-static const char* connectionString = "";
+const char* apiKey = "pEbV6M8QVTmc9S43r2jfrWmy488E8hi61OqZr4lun4B";
+String serverName = "https://maker.ifttt.com/trigger/door_status/with/key/pEbV6M8QVTmc9S43r2jfrWmy488E8hi61OqZr4lun4B";
+static const char* connectionString = "HostName=IOT-HUB-ESP.azure-devices.net;DeviceId=ESP-02;SharedAccessKey=3K/Nc5tebS7PLGbIjh6Eh7/WqAj0ZyNCZz2vzDzYjOc=";
 
 static bool hasIoTHub = false;
 
@@ -30,36 +30,37 @@ char homepage[] PROGMEM = R"=====(
         body{margin-top: 50px;}
         h1{color: #444444; margin: 50px auto 30px;}
         h3{margin-bottom: 50px; color: #444444;}
-        .button{background-color: green}
+        .button{background-color: green; }
         footer{font-size: 15px; color: blue;}
       </style>
       <script>
-        function onled1(){document.getElementById("redled").innerHTML="Led is On"};
-        function onled2(){document.getElementById("greenled").innerHTML="Led is On"};
-        function onled3(){document.getElementById("blueled").innerHTML="Led is On"};
-        
-        function offled1(){document.getElementById("redled").innerHTML=""};
-        function offled2(){document.getElementById("greenled").innerHTML=""};
-        function offled3(){document.getElementById("blueled").innerHTML=""};
-      
+       
       </script>
     </head>
   <body>
-    <h1>Pasu Jay Web Automation </h1>
+    <h1>HOME AUTOMATION </h1>
     <h3>This is An Automation Project</h3>
     <p>This is a simple esp32 project to control some devices via the web</P>
-    <p>Turn on or off RED LED</p>
-    <p id="redled">""</p>
-    <a href="/redledon"><button type="button" class="button button-on redclr" onclick="onled1()">ON</button></a>
-    <a href="/redledoff"><button type="button" class="button button-off" onclick="offled1()">OFF</button></a>
-    <p>Turn on or off GREEN LED</p>
-    <p id="greenled"></p>
-    <a href="/greenledon"><button type="button" class="button button-on greenclr" onclick="onled2()">ON</button></a>
-    <a href="/greenledoff"><button type="button" class="button button-off" onclick="offled2()">OFF</button></a>
-    <p>Turn on or off BLUE LED</p>
-    <p id="blueled"></p>
-    <a href="/blueledon"><button type="button" class="button button-on greenclr" onclick="onled3()">ON</button></a>
-    <a href="/blueledoff"><button type="button" class="button button-off" onclick="offled3()">OFF</button></a>
+    <p>Turn on or off the FAN</p>
+    <p id="fan"></p>
+    <a href="/fanon"><button type="button" class="button button-on redclr" onclick="onled1()">ON</button></a>
+    <a href="/fanoff"><button type="button" class="button button-off" onclick="offled1()">OFF</button></a>
+    <p>Turn on or off the AC</p>
+    <p id="AC"></p>
+    <a href="/ACon"><button type="button" class="button button-on greenclr" onclick="onled2()">ON</button></a>
+    <a href="/ACoff"><button type="button" class="button button-off" onclick="offled2()">OFF</button></a>
+    <p>Turn on or off the BULB</p>
+    <p id="bulb"></p>
+    <a href="/bulbon"><button type="button" class="button button-on greenclr" onclick="onled3()">ON</button></a>
+    <a href="/bulboff"><button type="button" class="button button-off" onclick="offled3()">OFF</button></a>
+    <p>Turn on or off the FRIDGE</p>
+    <p id="fridge"></p>
+    <a href="/fridgeon"><button type="button" class="button button-on greenclr" onclick="onled3()">ON</button></a>
+    <a href="/fridgeoff"><button type="button" class="button button-off" onclick="offled3()">OFF</button></a>
+    <p>Turn on or off all Appliance</p>
+    <p id="all"></p>
+    <a href="/allon"><button type="button" class="button button-on greenclr" onclick="onled3()">ON</button></a>
+    <a href="/alloff"><button type="button" class="button button-off" onclick="offled3()">OFF</button></a>
     <br>
     <br>
     <br>
@@ -71,28 +72,21 @@ char homepage[] PROGMEM = R"=====(
 WebServer server(80);
 
 const int led =  2;
-const int red =  12;
-const int green =  26;
-const int buzzermode =  14;
-const int blue = 27;
+const int fan =  12;
+const int AC =  26;
+const int fridge =  14;
+const int bulb = 27;
 
 
-void azureiot(){
-   if (!Esp32MQTTClient_Init((const uint8_t*)connectionString))
-  {
-    hasIoTHub = false;
-    Serial.println("Initializing IoT hub failed.");
-    return;
-  }
-  hasIoTHub = true;
-
+String azureiot(String Status){
+ 
   Serial.println("start sending events.");
   if (hasIoTHub)
   {
     char buff[128];
 
     // replace the following line with your data sent to Azure IoTHub
-    snprintf(buff, 128, "{\"JOSEPH\":\"PASU\"}");
+    snprintf(buff, 128, "{\"DEVICE_ID\":\"JOSEPH_ESP32\", \"LOCATION\":\"PORT HARCOURT\", \"STATUS\":\Status\}");
     
     if (Esp32MQTTClient_SendEvent(buff))
     {
@@ -131,52 +125,97 @@ void sendemail(){
       }
   }
 
-void redon(){
-    digitalWrite(red, HIGH);
-    Serial.println("the red led is being turn on");
+void allon(){
+    digitalWrite(fan, HIGH);
+    delay(500);
+    digitalWrite(AC, HIGH);
+    delay(500);
+    digitalWrite(bulb, HIGH);
+    delay(500);
+    digitalWrite(fridge, HIGH);
+    delay(500);
+    Serial.println("the appliances are all turned on");
     sendemail();
-    azureiot();
     server.send(200, "text/html", homepage);
+    azureiot("ALL APPLIANCE = ON");
+    }
+
+void fanon(){
+    digitalWrite(fan, HIGH);
+    Serial.println("the fan is being turned on");
+    sendemail();
+    server.send(200, "text/html", homepage);
+    azureiot("FAN = ON");
     }
     
-void greenon(){
-    digitalWrite(green, HIGH);
-    Serial.println("the green led is being turn on");
+void ACon(){
+    digitalWrite(AC, HIGH);
+    Serial.println("the AC is being turned on");
     sendemail();
-    azureiot();
     server.send(200, "text/html", homepage);
+    azureiot("AC = ON");
     }
 
-void blueon(){
-    digitalWrite(blue, HIGH);
-    Serial.println("the blue led is being turn on");
+void bulbon(){
+    digitalWrite(bulb, HIGH);
+    Serial.println("the bulb is being turn on");
     sendemail();
-    azureiot();
     server.send(200, "text/html", homepage);
+    azureiot("BULB = ON");
     }
 
-void redoff(){
-    digitalWrite(red, LOW);
-    Serial.println("the red led is being turned off");
+void fridgeon(){
+    digitalWrite(fridge, HIGH);
+    Serial.println("the fridge is being turned on");
     sendemail();
-    azureiot();
     server.send(200, "text/html", homepage);
+    azureiot("FRIDGE = 0N ");
+    }
+void alloff(){
+    digitalWrite(fan, LOW);
+    delay(500);
+    digitalWrite(AC, LOW);
+    delay(500);
+    digitalWrite(bulb, LOW);
+    delay(500);
+    digitalWrite(fridge, LOW);
+    delay(500);
+    Serial.println("the appliances are all turned oFF");
+    sendemail();
+    server.send(200, "text/html", homepage);
+    azureiot("ALL APPLIANCE = OFF");
+    }
+
+void fanoff(){
+    digitalWrite(fan, LOW);
+    Serial.println("the fan is being turned off");
+    sendemail();
+    server.send(200, "text/html", homepage);
+    azureiot("FAN = OFF");
     }
     
-void greenoff(){
-    digitalWrite(green, LOW);
-    Serial.println("the green led is being turned off");
+void ACoff(){
+    digitalWrite(AC, LOW);
+    Serial.println("the AC is being turned off");
     sendemail();
-    azureiot();
     server.send(200, "text/html", homepage);
+    azureiot("AC = OFF");
     }
 
-void blueoff(){
-    digitalWrite(blue, LOW);
-    Serial.println("the blue led is being turned off");
+void bulboff(){
+    digitalWrite(bulb, LOW);
+    Serial.println("the bulb is being turned off");
     sendemail();
-    azureiot();
     server.send(200, "text/html", homepage);
+    azureiot("BULB = OFF");
+    }
+
+void fridgeoff(){
+    digitalWrite(fridge, LOW);
+    Serial.println("the fridge is being turned off");
+    sendemail();
+    server.send(200, "text/html", homepage);
+    azureiot("FRIDGE = OFF");
     }
 
 void handleRoot() {
@@ -203,10 +242,10 @@ void handleNotFound() {
 }
 
 void setup(void) {
-  pinMode(red, OUTPUT);
-  pinMode(green, OUTPUT);
-  pinMode(blue, OUTPUT);
-  pinMode(buzzermode, OUTPUT);
+  pinMode(fan, OUTPUT);
+  pinMode(AC, OUTPUT);
+  pinMode(fridge, OUTPUT);
+  pinMode(bulb, OUTPUT);
   pinMode(led, OUTPUT);
   digitalWrite(led, 0);
   Serial.begin(115200);
@@ -229,13 +268,27 @@ void setup(void) {
     Serial.println("MDNS responder started");
   }
 
+    if (!Esp32MQTTClient_Init((const uint8_t*)connectionString))
+  {
+    hasIoTHub = false;
+    Serial.println("Initializing IoT hub failed.");
+    return;
+  }
+  hasIoTHub = true;
+
+
   server.on("/", handleRoot);
-  server.on("/redledon", redon);
-  server.on("/redledoff", redoff);
-  server.on("/greenledon", greenon);
-  server.on("/greenledoff", greenoff);
-  server.on("/blueledon", blueon);
-  server.on("/blueledoff", blueoff);
+  server.on("/fanon", fanon);
+  server.on("/fanoff", fanoff);
+  server.on("/ACon", ACon);
+  server.on("/ACoff", ACoff);
+  server.on("/bulbon", bulbon);
+  server.on("/bulboff", bulboff);
+  server.on("/fridgeon", fridgeon);
+  server.on("/fridgeoff", fridgeoff);
+   server.on("/allon", allon);
+  server.on("/alloff", alloff);
+
 
   server.onNotFound(handleNotFound);
 
