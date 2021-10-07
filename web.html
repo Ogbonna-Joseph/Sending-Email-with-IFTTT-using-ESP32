@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+   <head>
+      <meta name="viewport" content="width=device=width, initial-scale=1\">
+      <title>WEB AUTOMATION</title>
+      <style>
+        html{font-family: Helvetica; display: inline-block; margin: 0px auto; text-align: center; background-color: yellow;}
+        body{margin-top: 50px;}
+        h1{color: #444444; margin: 50px auto 30px;}
+        h3{margin-bottom: 50px; color: #444444;}
+        .button{background-color: green; }
+        footer{font-size: 15px; color: blue;}
+      </style>
+      <script>
+       
+      </script>
+    </head>
+  <body>
+    <h1>HOME AUTOMATION </h1>
+    <h3>This is An Automation Project</h3>
+    <p>This is a simple esp32 project to control some devices via the web</P>
+    <p>Turn on or off the FAN</p>
+    <p id="fan"></p>
+    <a href="/fanon"><button type="button" class="button button-on redclr" onclick="onled1()">ON</button></a>
+    <a href="/fanoff"><button type="button" class="button button-off" onclick="offled1()">OFF</button></a>
+    <p>Turn on or off the AC</p>
+    <p id="AC"></p>
+    <a href="/ACon"><button type="button" class="button button-on greenclr" onclick="onled2()">ON</button></a>
+    <a href="/ACoff"><button type="button" class="button button-off" onclick="offled2()">OFF</button></a>
+    <p>Turn on or off the BULB</p>
+    <p id="bulb"></p>
+    <a href="/bulbon"><button type="button" class="button button-on greenclr" onclick="onled3()">ON</button></a>
+    <a href="/bulboff"><button type="button" class="button button-off" onclick="offled3()">OFF</button></a>
+    <p>Turn on or off the FRIDGE</p>
+    <p id="fridge"></p>
+    <a href="/fridgeon"><button type="button" class="button button-on greenclr" onclick="onled3()">ON</button></a>
+    <a href="/fridgeoff"><button type="button" class="button button-off" onclick="offled3()">OFF</button></a>
+    <p>Turn on or off all Appliance</p>
+    <p id="all"></p>
+    <a href="/allon"><button type="button" class="button button-on greenclr" onclick="onled3()">ON</button></a>
+    <a href="/alloff"><button type="button" class="button button-off" onclick="offled3()">OFF</button></a>
+    <br>
+    <br>
+    <br>
+    <footer><B>AUTOMATION BY JOSEPH</B></footer>
+  </body>
+  </html>
