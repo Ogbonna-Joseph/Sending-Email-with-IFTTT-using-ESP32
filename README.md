@@ -9,7 +9,7 @@ In the project, you recieve an email alert when a specific action occurs. Also d
 - BULB
 - FAN
 - AIR CONDITIONAL
-- REFRIGERATOR
+- REFRIGERATOR.
 
 <br>
 
