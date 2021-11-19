@@ -8,7 +8,7 @@ In the project, you recieve an email alert when a specific action occurs. Also d
 ### HOME APPLIANCES USED
 - BULB
 - FAN
-- AIR CONDITIONAL
+- AIR CONDITIONAL.
 - REFRIGERATOR.
 
 <br>
